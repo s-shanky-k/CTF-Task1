@@ -51,13 +51,13 @@ input()
 
 
 #Search using record ID
-response = requests.get(BASE + "search",{"id":"1"},headers = header,)
+response = requests.get(BASE + "search",{"id":"1"},headers = header)
 print(response.json())
 input()
 
 
 #Search using record name
-response = requests.get(BASE + "search",{"name":"boom2"},headers = header,)
+response = requests.get(BASE + "search",{"name":"boom2"},headers = header)
 print(response.json())
 input()
 
