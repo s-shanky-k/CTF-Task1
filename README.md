@@ -27,8 +27,7 @@ Download from https://www.sqlite.org/download.html
 ### Sample API Calls
 Sample API calls are provided in test.py
 
-`python test.py`
-
+Run `python test.py` to create a user and to also test the routes of the API 
 
 
 
