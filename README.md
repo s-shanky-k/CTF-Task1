@@ -4,7 +4,12 @@
 These instructions will get you a copy of the project up and running on your local machine.
 
 
-### Installing Dependencies
+### Installing
+
+#### SQLite
+Download from https://www.sqlite.org/download.html
+
+#### Python Dependencies
 `pip install -r requirements.txt`
 
 
