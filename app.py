@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, render_template
 from flask_restful import reqparse, abort
 from flask_sqlalchemy import  SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///records.db'
 
 db = SQLAlchemy(app)
 
-
+#DB MODELS
 class User(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(50),unique=True)
@@ -28,9 +28,11 @@ class Record(db.Model):
     name = db.Column(db.String(50))
     createdAt = db.Column(DateTime(timezone=True), server_default=func.now())
 
+
 record_search_args = reqparse.RequestParser()
 record_search_args.add_argument("id",type=int,help="ID of record",required=False)
 record_search_args.add_argument("name",type=str,help="Name of record",required=False)
+
 
 def token_required(f):
     @wraps(f)
@@ -77,6 +79,12 @@ def getRecordByName(name):
     return jsonify({"records":output})
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+#Route to fetch all users
 @app.route('/users',methods=['GET'])
 @token_required
 def get_all_user():
@@ -92,6 +100,7 @@ def get_all_user():
     return jsonify({"users":output})
 
 
+#Route to signup
 @app.route('/signup',methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -108,6 +117,7 @@ def create_user():
     return jsonify({'message':"Username already exists"})
 
 
+#Route for login
 @app.route('/login')
 def login():
     auth = request.authorization
@@ -161,6 +171,8 @@ def get_one_records(record_id):
 
     return jsonify(record_dict)
 
+
+#Route to Search either based on id or name
 @app.route('/search',methods=['GET'])
 @token_required
 def search():
@@ -173,7 +185,6 @@ def search():
         return getRecordById(id)
     else:
         return getRecordByName(name)
-
 
 
 #To add a record
@@ -189,7 +200,7 @@ def create_record():
     return jsonify({"message":"New record created"})
 
 
-#To Update
+#To Update a record
 @app.route('/record/<record_id>',methods=['PATCH'])
 @token_required
 def complete_record(record_id):
