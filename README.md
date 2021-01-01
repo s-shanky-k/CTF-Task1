@@ -3,6 +3,9 @@
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine.
 
+### Hosted
+Link: https://shanky-ctf-task1-api.herokuapp.com/
+
 
 ### Installing
 
